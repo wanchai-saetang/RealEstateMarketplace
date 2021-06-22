@@ -19,6 +19,12 @@ contract("TestERC721Mintable", (accounts) => {
       });
     });
 
+    it("can get name and symbol", async function () {
+      const name = await this.contract.name({ from: account_one });
+      const symbol = await this.contract.symbol({ from: account_one });
+      console.log(name, symbol);
+    });
+
     it("should return total supply", async function () {
       const result = await this.contract.totalSupply({ from: account_one });
       assert.equal(
@@ -77,7 +83,7 @@ contract("TestERC721Mintable", (accounts) => {
     it("return token approval if it exists", async function () {
       let revertTransaction = false;
       try {
-        await this.contract.getApproved(2, {
+        await this.contract.getApproved(3, {
           from: account_one,
         });
       } catch (err) {
@@ -130,7 +136,7 @@ contract("TestERC721Mintable", (accounts) => {
     });
 
     it("should return contract owner", async function () {
-      const owner = await this.contract.getOwner();
+      const owner = await this.contract.owner();
       assert.equal(
         owner,
         account_one,
@@ -139,14 +145,14 @@ contract("TestERC721Mintable", (accounts) => {
     });
 
     it("can transfer contract owner", async function () {
-      const owner = await this.contract.getOwner();
+      const owner = await this.contract.owner();
       assert.equal(
         owner,
         account_one,
         "account_one should be owner of contract"
       );
       await this.contract.transferOwnership(account_two, { from: account_one });
-      const ownerAfter = await this.contract.getOwner();
+      const ownerAfter = await this.contract.owner();
       assert.equal(
         ownerAfter,
         account_two,
@@ -157,7 +163,7 @@ contract("TestERC721Mintable", (accounts) => {
         from: account_two,
       });
 
-      const transferBack = await this.contract.getOwner();
+      const transferBack = await this.contract.owner();
       assert.equal(
         transferBack,
         account_one,

@@ -2,17 +2,20 @@
   "name": "eth-contracts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "minttokens.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "truffle test",
+    "mint": "npx parcel minttokens.html"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@openzeppelin/contracts": "^3.1.0",
-    "@truffle/hdwallet-provider": "^1.4.1"
+    "@truffle/hdwallet-provider": "^1.4.1",
+    "web3": "^1.3.6"
   },
   "devDependencies": {
+    "parcel": "^2.0.0-beta.2",
     "prettier": "^2.3.1",
     "prettier-plugin-solidity": "^1.0.0-beta.13",
     "solhint": "^3.3.6"

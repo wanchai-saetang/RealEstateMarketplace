@@ -53,6 +53,7 @@ contract SolnSquareVerifier is CustomERC721Token {
     // TODO Create a function to add the solutions to the array and emit the event
     function addSolution(
         address to,
+        uint256 tokenId,
         uint256[2] memory a,
         uint256[2][2] memory b,
         uint256[2] memory c,
@@ -62,7 +63,9 @@ contract SolnSquareVerifier is CustomERC721Token {
             verifierInstance.verifyTx(a, b, c, input),
             "the solution not pass verified"
         );
-        bytes32 solutionKey = keccak256(abi.encodePacked(to, a, b, c, input));
+        bytes32 solutionKey = keccak256(
+            abi.encodePacked(to, tokenId, a, b, c, input)
+        );
         require(
             uniqueSolutions[solutionKey]._exists == false,
             "solution should be unique"
@@ -83,7 +86,7 @@ contract SolnSquareVerifier is CustomERC721Token {
         uint256[2] memory c,
         uint256[2] memory input
     ) public {
-        addSolution(to, a, b, c, input);
+        addSolution(to, tokenId, a, b, c, input);
         mint(to, tokenId);
     }
 }

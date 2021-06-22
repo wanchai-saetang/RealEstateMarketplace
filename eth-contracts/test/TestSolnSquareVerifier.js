@@ -14,10 +14,18 @@ contract("Verifier", (accounts) => {
         { from: account_one }
       );
     });
+
+    it("can get name and symbol", async function () {
+      const symbol = await this.contract.symbol();
+      const name = await this.contract.name();
+      console.log(symbol, name);
+    });
+
     // Test if a new solution can be added for contract - SolnSquareVerifier
     it("can add new solution", async function () {
       const result = await this.contract.addSolution(
         account_two,
+        1,
         proof.proof.a,
         proof.proof.b,
         proof.proof.c,
@@ -39,14 +47,14 @@ contract("Verifier", (accounts) => {
     it("can mint ERC721 token", async function () {
       await this.contract.mintNewNFT(
         account_two,
-        1,
+        2,
         proof.proof.a,
         proof.proof.b,
         proof.proof.c,
         proof.inputs,
         { from: account_one }
       );
-      const owner = await this.contract.ownerOf(1, { from: account_one });
+      const owner = await this.contract.ownerOf(2, { from: account_one });
       assert.equal(owner, account_two, "token must be minted");
     });
   });
