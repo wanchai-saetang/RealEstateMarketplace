@@ -236,7 +236,7 @@ contract ERC721 is Pausable, ERC165 {
         address from,
         address to,
         uint256 tokenId
-    ) public {
+    ) public whenNotPaused {
         require(_isApprovedOrOwner(msg.sender, tokenId));
 
         _transferFrom(from, to, tokenId);
@@ -321,7 +321,7 @@ contract ERC721 is Pausable, ERC165 {
         _tokenApprovals[tokenId] = address(0);
         // TODO: update token counts & transfer ownership of the token ID
         _ownedTokensCount[from].decrement();
-        _ownedTokensCount[to].decrement();
+        _ownedTokensCount[to].increment();
         _tokenOwner[tokenId] = to;
         // TODO: emit correct event
         emit Transfer(from, to, tokenId);
