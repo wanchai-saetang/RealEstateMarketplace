@@ -2,11 +2,10 @@
 // var SquareVerifier = artifacts.require("SquareVerifier");
 // var SolnSquareVerifier = artifacts.require("SolnSquareVerifier");
 
-// for test
-const CustomERC721Token = artifacts.require("CustomERC721Token");
+const SquareVerifier = artifacts.require("Verifier");
+const SolnSquareVerifier = artifacts.require("SolnSquareVerifier");
 
-module.exports = function (deployer) {
-  // deployer.deploy(SquareVerifier);
-  // deployer.deploy(SolnSquareVerifier);
-  deployer.deploy(CustomERC721Token);
+module.exports = async function (deployer) {
+  await deployer.deploy(SquareVerifier);
+  await deployer.deploy(SolnSquareVerifier, SquareVerifier.address);
 };
